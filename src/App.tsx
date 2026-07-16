@@ -1,38 +1,70 @@
-import { useEffect, useState } from "react";
-import type { Schema } from "../amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
-
-const client = generateClient<Schema>();
-
 function App() {
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
-
-  useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
-  }, []);
-
-  function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
-  }
+  const services = [
+    {
+      id: 1,
+      title: "Desarrollo Web",
+      icon: "🌐",
+      description: "Aplicaciones web modernas y escalables",
+    },
+    {
+      id: 2,
+      title: "Aplicaciones Móvil",
+      icon: "📱",
+      description: "iOS y Android de alto rendimiento",
+    },
+    {
+      id: 3,
+      title: "Cloud & DevOps",
+      icon: "☁️",
+      description: "Infraestructura segura y confiable",
+    },
+    {
+      id: 4,
+      title: "Inteligencia Artificial",
+      icon: "🤖",
+      description: "Soluciones con IA y Machine Learning",
+    },
+    {
+      id: 5,
+      title: "Consultoría Tech",
+      icon: "💡",
+      description: "Estrategia y transformación digital",
+    },
+    {
+      id: 6,
+      title: "Ciberseguridad",
+      icon: "🔒",
+      description: "Protección de datos y sistemas",
+    },
+  ];
 
   return (
-    <main>
-      <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
-        ))}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
-        </a>
+    <main className="landing">
+      <div className="hero">
+        <div className="hero-content">
+          <h1>Necesitoya</h1>
+          <p className="tagline">Soluciones tecnológicas innovadoras para tu negocio</p>
+          <p className="subtitle">Estamos preparando algo especial para ti</p>
+          <button className="cta-button">Contáctanos</button>
+        </div>
       </div>
+
+      <section className="services">
+        <h2>Nuestros Servicios</h2>
+        <div className="services-grid">
+          {services.map((service) => (
+            <div key={service.id} className="service-card">
+              <div className="service-icon">{service.icon}</div>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <footer className="footer">
+        <p>© 2024 Necesitoya. Todos los derechos reservados.</p>
+      </footer>
     </main>
   );
 }
